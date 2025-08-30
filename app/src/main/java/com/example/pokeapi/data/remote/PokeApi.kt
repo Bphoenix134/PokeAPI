@@ -1,5 +1,7 @@
 package com.example.pokeapi.data.remote
 
+import com.example.pokeapi.data.remote.dto.PokemonDetailResponse
+import com.example.pokeapi.data.remote.dto.PokemonListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
