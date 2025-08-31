@@ -1,10 +1,11 @@
 package com.example.pokeapi.data.local
 
-import androidx.room.TypeConverters
+import androidx.room.TypeConverter
 
 class Converters {
-    @TypeConverters
+    @TypeConverter
     fun fromList(list: List<String>): String = list.joinToString(",")
-    @TypeConverters
+
+    @TypeConverter
     fun toList(string: String): List<String> = string.split(",")
 }
