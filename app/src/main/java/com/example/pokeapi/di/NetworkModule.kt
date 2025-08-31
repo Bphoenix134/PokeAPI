@@ -1,5 +1,6 @@
-package com.example.pokeapi.data.remote
+package com.example.pokeapi.di
 
+import com.example.pokeapi.data.remote.PokeApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
