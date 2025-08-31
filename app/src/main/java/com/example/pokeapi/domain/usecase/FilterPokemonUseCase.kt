@@ -7,7 +7,7 @@ import javax.inject.Inject
 class FilterPokemonUseCase @Inject constructor(
     private val repository: PokemonRepository
 ) {
-    suspend operator fun invoke(type: String): List<Pokemon> {
-        return repository.filterByType(type)
+    suspend operator fun invoke(types: List<String>): List<Pokemon> {
+        return repository.filterByTypes(types)
     }
 }

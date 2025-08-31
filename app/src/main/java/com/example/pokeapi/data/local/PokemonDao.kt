@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface PokemonDao {
@@ -22,6 +24,15 @@ interface PokemonDao {
     @Query("SELECT * FROM pokemon WHERE name = :name")
     suspend fun getPokemonByName(name: String): PokemonEntity?
 
-    @Query("SELECT * FROM pokemon WHERE types Like :type")
-    suspend fun filterByType(type: String): List<PokemonEntity>
+    @RawQuery
+    suspend fun filterByTypes(query: SupportSQLiteQuery): List<PokemonEntity>
+
+    @Query("SELECT COUNT(*) FROM pokemon")
+    suspend fun getPokemonCount(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTypes(types: List<TypeEntity>)
+
+    @Query("SELECT * FROM types")
+    suspend fun getAllTypes(): List<TypeEntity>
 }

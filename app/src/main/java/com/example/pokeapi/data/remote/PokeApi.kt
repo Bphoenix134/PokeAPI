@@ -2,6 +2,7 @@ package com.example.pokeapi.data.remote
 
 import com.example.pokeapi.data.remote.dto.PokemonDetailResponse
 import com.example.pokeapi.data.remote.dto.PokemonListResponse
+import com.example.pokeapi.data.remote.dto.TypeListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -15,4 +16,7 @@ interface PokeApi {
 
     @GET("pokemon/{name}")
     suspend fun getPokemonListDetail(@Path("name") name: String): PokemonDetailResponse
+
+    @GET("type")
+    suspend fun getTypes(): TypeListResponse
 }
