@@ -6,9 +6,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.example.pokeapi.data.local.PokemonDao
 import com.example.pokeapi.data.local.PokemonEntity
 import com.example.pokeapi.data.remote.PokeApi
+import com.example.pokeapi.data.remote.dto.PokemonSummaryDto
 import com.example.pokeapi.domain.model.Pokemon
 import com.example.pokeapi.domain.model.PokemonDetail
 import com.example.pokeapi.domain.repository.PokemonRepository
@@ -68,11 +70,11 @@ class PokemonRepositoryImpl @Inject constructor(
                         val isOnline = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork != null
                         if (isOnline) {
                             val response = api.getPokemonList(limit, params.key ?: 0)
-                            val pokemons = response.result.map { dto ->
+                            val pokemons = response.result.map { dto: PokemonSummaryDto ->
                                 Pokemon(
                                     id = dto.url.extractId(),
                                     name = dto.name,
-                                    imageUrl = "https://pokeapi.co/api/v2/pokemon/${dto.name}/sprites/front_default"
+                                    imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${dto.url.extractId()}.png"
                                 )
                             }
                             pokemonDao.insertAll(pokemons.map { it.toEntity() })
@@ -87,6 +89,13 @@ class PokemonRepositoryImpl @Inject constructor(
                         }
                     } catch (e: Exception) {
                         return LoadResult.Error(e)
+                    }
+                }
+
+                override fun getRefreshKey(state: PagingState<Int, Pokemon>): Int? {
+                    return state.anchorPosition?.let { anchorPosition ->
+                        state.closestPageToPosition(anchorPosition)?.prevKey?.plus(limit)
+                            ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(limit)
                     }
                 }
             }
@@ -115,5 +124,13 @@ class PokemonRepositoryImpl @Inject constructor(
         }
         val cached = pokemonDao.getPokemonByName(name)
         return cached?.toPokemonDetail() ?: throw Exception("Pokemon not found")
+    }
+
+    override suspend fun searchPokemon(query: String): List<Pokemon> {
+        return pokemonDao.searchPokemon("%$query%").map { it.toPokemon() }
+    }
+
+    override suspend fun filterByType(type: String): List<Pokemon> {
+        return pokemonDao.filterByType("%$type%").map { it.toPokemon() }
     }
 }
