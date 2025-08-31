@@ -18,6 +18,7 @@ coil = "2.6.0"
 ksp = "2.0.21-1.0.25"
 hilt = "2.56.2"
 hiltNavigation = "1.2.0"
+accompanistSwiperefresh = "0.36.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +35,8 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCompose"}
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingCompose"}
+androidx-paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "pagingCompose"}
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
@@ -48,6 +51,7 @@ org-jetbrains-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", na
 io-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+com-google-accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref="accompanistSwiperefresh" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
