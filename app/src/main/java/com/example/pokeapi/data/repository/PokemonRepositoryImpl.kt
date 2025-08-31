@@ -11,6 +11,7 @@ import com.example.pokeapi.data.local.PokemonEntity
 import com.example.pokeapi.data.remote.PokeApi
 import com.example.pokeapi.domain.model.Pokemon
 import com.example.pokeapi.domain.model.PokemonDetail
+import com.example.pokeapi.domain.repository.PokemonRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -67,7 +68,7 @@ class PokemonRepositoryImpl @Inject constructor(
                         val isOnline = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork != null
                         if (isOnline) {
                             val response = api.getPokemonList(limit, params.key ?: 0)
-                            val pokemons = response.results.map { dto ->
+                            val pokemons = response.result.map { dto ->
                                 Pokemon(
                                     id = dto.url.extractId(),
                                     name = dto.name,
@@ -96,7 +97,7 @@ class PokemonRepositoryImpl @Inject constructor(
         val isOnline = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetwork != null
         if (isOnline) {
             try {
-                val response = api.getPokemonDetail(name)
+                val response = api.getPokemonListDetail(name)
                 val detail = PokemonDetail(
                     id = response.id,
                     name = response.name,

@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(pokemons: List<String>)
+    suspend fun insertAll(pokemons: List<PokemonEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(pokemon: PokemonEntity)
